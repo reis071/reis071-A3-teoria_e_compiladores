@@ -1,0 +1,9 @@
+inicioDoPrograma
+    inteiro i.
+    escreva("Contando de 0 a 9:").
+    
+    paraCada (i recebe 0; i menor 10; i recebe i mais 1) {
+        escreva(i).
+    }
+    
+fimDoPrograma

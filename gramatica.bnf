@@ -1,0 +1,43 @@
+<programa> ::= "inicio_programa" <declarações> <bloco> "fim_programa"
+
+<declarações> ::= (<declaração>)*
+
+<declaração> ::= ("numero_inteiro" | "numero_real" | "texto") <identificadores> "."
+
+<identificadores> ::= <identificador> ("," <identificador>)*
+
+<bloco> ::= (<comando>)*
+
+<comando> ::= <comando_leitura> 
+             | <comando_escrita> 
+             | <comando_atribuicao> 
+             | <comando_condicional> 
+             | <comando_enquanto>
+             | <comando_para>
+
+<comando_leitura> ::= "ler" "(" <identificador> ")" "."
+
+<comando_escrita> ::= "exibir" "(" (<identificador> | <string>) ")" "."
+
+<comando_atribuicao> ::= <identificador> ":=" <expressao> "."
+
+<comando_condicional> ::= "dado_que" "(" <expressao> <operador_relacional> <expressao> ")" "{" <bloco> "}" ("senao" "{" <bloco> "}")?
+
+<comando_enquanto> ::= "enquanto" "(" <expressao> <operador_relacional> <expressao> ")" "{" <bloco> "}"
+
+<comando_para> ::= "para" "(" <comando_atribuicao> <expressao> <operador_relacional> <expressao> ";" <comando_atribuicao> ")" "{" <bloco> "}"
+
+<expressao> ::= <termo> ("mais" | "menos" <termo>)*
+
+<termo> ::= <fator> ("vezes" | "dividido" <fator>)*
+
+<fator> ::= <numero> | <identificador> | "(" <expressao> ")"
+
+<operador_relacional> ::= "igual" | "diferente" | "menor" | "maior" | "menor_igual" | "maior_igual"
+
+<identificador> ::= <letra> (<letra> | <digito>)*
+
+<numero> ::= <digito>+
+<letra> ::= "a" | ... | "z" | "A" | ... | "Z"
+<digito> ::= "0" | ... | "9"
+<string> ::= "\"" (<caractere>)* "\""
