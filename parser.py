@@ -264,37 +264,42 @@ class Parser:
             return f"({code})", expr_type
         else:
             self.error("Fator esperado")
-            
+        
     def cmd_para(self):
         if not self.match('FOR'):
             self.error("Esperado 'paraCada'")
-        
+
         if not self.match('LPAREN'):
             self.error("Esperado '(' após 'paraCada'")
+
+        # Inicialização: i recebe 0
+        init_code = self.cmd_expr(for_loop=True)  # O primeiro comando de atribuição (inicialização)
         
-        init_code = self.cmd_expr(for_loop=True)  # O primeiro comando de atribuição
         if not self.match('SEMI'):
             self.error("Esperado ';' após inicialização em 'paraCada'")
-        
+
+        # Condição: i menor 10
         condition = self.expr()  # Expressão que define a condição do loop
+        
         if not self.match('SEMI'):
             self.error("Esperado ';' após condição em 'paraCada'")
-        
+
+        # Incremento: i recebe i mais 1
         increment_code = self.cmd_expr(for_loop=True)  # Comando de incremento
+        
         if not self.match('RPAREN'):
             self.error("Esperado ')' após incremento em 'paraCada'")
-        
+
         if not self.match('LBRACE'):
             self.error("Esperado '{' após 'paraCada'")
-        
-        # Adiciona o código do loop
+
+        # Adiciona o código do loop em Python
         self.generator.add_line(f"{init_code}  # Inicialização")
-        self.generator.add_line(f"while {condition}:")  # Loop correspondente
+        self.generator.add_line(f"for {increment_code}:")  # Traduzido para o formato de um 'for' em Python
         self.generator.increase_indent()
-        self.bloco()
-        self.generator.add_line(increment_code)  # Incremento
+        self.bloco()  # Processa o bloco de código dentro do 'for'
         self.generator.decrease_indent()
-        
+
         if not self.match('RBRACE'):
             self.error("Esperado '}' após bloco 'paraCada'")
 
