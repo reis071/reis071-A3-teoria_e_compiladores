@@ -1,4 +1,4 @@
-# A3-teoria_e_compiladores
+# A3 teoria e compiladores
 
 Analisador Léxico tradutor de linguagem própria para Python
 
