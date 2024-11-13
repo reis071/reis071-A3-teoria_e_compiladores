@@ -74,8 +74,8 @@ Exemplo de uso:
 
 Contribuições são bem-vindas! Para contribuir, por favor, siga as seguintes etapas:
 
-Fork este repositório.
-Crie um novo branch para suas alterações.
-Faça o commit das suas alterações.
-Envie um pull request.
+Fork este repositório.  
+Crie um novo branch para suas alterações.   
+Faça o commit das suas alterações.  
+Envie um pull request.  
 
