@@ -62,15 +62,15 @@ vezes|dividido
 
 Exemplo de uso: 
 
-inicioDoPrograma
+    inicioDoPrograma
     inteiro i.
     escreva("Contando de 0 a 9:").
     
     paraCada (i recebe 0; i menor 10; i recebe i mais 1) {
         escreva(i).
     }
-    
-fimDoPrograma
+
+    fimDoPrograma
 
 Contribuições são bem-vindas! Para contribuir, por favor, siga as seguintes etapas:
 
