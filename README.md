@@ -3,11 +3,11 @@
 Analisador Léxico tradutor de linguagem própria para Python
 
 Autores:
-Guilherme Reis correia 12722123056
-Luís Carlos Santos Melo de Jesus 1272122545
-Luan Cavalcante Dias Rodrigues 1272122479
-Victor Hugo Cordeiro   1272123431
-Victor Macedo Camargo  1271924581
+Guilherme Reis correia 12722123056    
+Luís Carlos Santos Melo de Jesus 1272122545 
+Luan Cavalcante Dias Rodrigues 1272122479   
+Victor Hugo Cordeiro   1272123431   
+Victor Macedo Camargo  1271924581   
 
 Descrição
 
@@ -30,33 +30,33 @@ tokens.py: (Opcional) Arquivo separado para definir os tokens.
 
 Tokens suportados:
 
-inicioDoPrograma
-fimDoPrograma
-inteiro
-decimal
-texto
-dadoQue
-senao
-enquanto
-paraCada
-leia
-escreva
-recebe
-igual|diferente|menor|maior|menor_igual|maior_igual
-mais|menos
-vezes|dividido
-\(
-\)
-\{
-\}   
-,
-;
-\.
-\d+(\.\d+)?
-[a-zA-Z_][a-zA-Z0-9_]*
-"[^"]*"
-\n
-[ \t]+
+inicioDoPrograma    
+fimDoPrograma   
+inteiro 
+decimal 
+texto   
+dadoQue 
+senao   
+enquanto    
+paraCada    
+leia    
+escreva 
+recebe  
+igual|diferente|menor|maior|menor_igual|maior_igual 
+mais|menos  
+vezes|dividido  
+\(  
+\)  
+\{  
+\}     
+,      
+;   
+\.  
+\d+(\.\d+)? 
+[a-zA-Z_][a-zA-Z0-9_]*  
+"[^"]*" 
+\n  
+[ \t]+  
 
 
 
