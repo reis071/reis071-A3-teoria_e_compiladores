@@ -3,11 +3,11 @@
 Analisador Léxico tradutor de linguagem própria para Python
 
 Autores:
-Guilherme Reis
-Luis
-Luan
-Victor Hugo
-Victor Macedo Camargo   RA: 1271924581
+Guilherme Reis correia 12722123056
+Luís Carlos Santos Melo de Jesus 1272122545
+Luan Cavalcante Dias Rodrigues 1272122479
+Victor Hugo Cordeiro   1272123431
+Victor Macedo Camargo  1271924581
 
 Descrição
 
