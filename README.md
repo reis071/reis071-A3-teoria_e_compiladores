@@ -250,6 +250,7 @@ if __name__ == "__main__":
 ## O parser.py é responsável por realizar a análise sintática do código tokenizado, utilizando a gramática da linguagem fictícia, além de gerar código equivalente em Python. Ele também realiza uma análise semântica básica, como validação de declarações e compatibilidade de tipos.
 
 # 1. Classe CodeGenerator
+
 # A classe CodeGenerator gerencia a geração do código Python a partir da análise sintática.
 
 class CodeGenerator:
@@ -271,6 +272,7 @@ class CodeGenerator:
     def get_code(self):
         return "\n".join(self.code)
 # 2. Classe SemanticAnalyzer
+
 # A classe SemanticAnalyzer realiza verificações semânticas no código, como validação de variáveis e tipos.
 
 class SemanticAnalyzer:
@@ -294,6 +296,7 @@ class SemanticAnalyzer:
 
             
 # 3. Classe Parser
+
 # A classe Parser realiza a análise sintática do código tokenizado e utiliza as classes CodeGenerator e SemanticAnalyzer para gerar código Python e realizar validações.
 
 class Parser:
@@ -317,7 +320,9 @@ class Parser:
         self.program()
         return self.generator.get_code()
 # 4. Funções do Parser
+
 # Função Principal: program()
+
 # Analisa a estrutura principal do programa, verificando o início e o fim.
 
 def program(self):
@@ -329,6 +334,7 @@ def program(self):
         self.error("Esperado 'fimDoPrograma'")
         
 # Declaração de Variáveis: declara()
+
 # Analisa declarações de variáveis e gera as inicializações correspondentes.
 
 def declara(self):
@@ -347,6 +353,7 @@ def declara(self):
             self.error("Esperado '.' após declaração")
 
 # Estruturas Condicionais: cmd_if()
+
 # Processa condições (dadoQue) e blocos opcionais (senao).
 
 def cmd_if(self):
@@ -389,6 +396,7 @@ def cmd_if(self):
             self.error("Esperado '}' após bloco 'senao'")
             
 #Loop paraCada: cmd_para()
+
 #Processa loops utilizando o comando paraCada.
 
 def cmd_para(self):
@@ -427,6 +435,7 @@ def cmd_para(self):
         self.error("Esperado '}' após bloco 'paraCada'")
         
 #Expressões: expr() e termo()
+
 #Processam expressões matemáticas e termos.
 
 def expr(self):
