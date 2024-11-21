@@ -23,7 +23,7 @@ tokens_definitions = {
     'RBRACE': r'\}',
     'COMMA': r',',
     'SEMI': r';',
-    'DOT': r'\.',  # Token para ponto final
+    'DOT': r'\|',  # Token para ponto final
     'NUMBER': r'\d+(\.\d+)?',
     'ID': r'[a-zA-Z_][a-zA-Z0-9_]*',
     'STRING': r'"[^"]*"',  # Corrigido para permitir strings

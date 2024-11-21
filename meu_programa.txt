@@ -1,9 +1,6 @@
 inicioDoPrograma
-    inteiro i.
-    escreva("Contando de 0 a 9:").
+    inteiro i|
+    decimal a|
     
-    paraCada (i recebe 0; i menor 10; i recebe i mais 1) {
-        escreva(i).
-    }
-    
+    a recebe 2.2|
 fimDoPrograma
