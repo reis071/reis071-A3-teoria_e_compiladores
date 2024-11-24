@@ -15,6 +15,8 @@ tokens_definitions = {
     'REL_OP': r'menor_igual|maior_igual|igual|diferente|menor|maior',  # Ajustado
     'ADD_OP': r'mais|menos',
     'MUL_OP': r'vezes|dividido',
+    'MUL_OP': r'vezes|dividido',
+    'MOD_OP': r'modulo', 
     'LPAREN': r'\(',
     'RPAREN': r'\)',
     'LBRACE': r'\{',

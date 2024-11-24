@@ -41,7 +41,7 @@ class SemanticAnalyzer:
 class Parser:
     def __init__(self, tokens):
         self.tokens = tokens
-        self.position = 0
+        self.position = 0  # Inicializa a posição atual no fluxo de tokens
         self.generator = CodeGenerator()
         self.semantic_analyzer = SemanticAnalyzer()
 
@@ -52,31 +52,40 @@ class Parser:
         'igual': '==',
         'diferente': '!=',
         'menor_igual': '<=',
-        'maior_igual': '>='
+        'maior_igual': '>=',
+        'modulo': '%',  # Adicionado
     }
         if operador not in operadores_map:
-           raise ValueError(f"Erro Semântico: Operador relacional '{operador}' inválido.")
+            raise ValueError(f"Erro Semântico: Operador relacional '{operador}' inválido.")
         return operadores_map[operador]
 
+
+    def match(self, expected_type):
+        """Verifica se o token atual corresponde ao tipo esperado."""
+        if self.position < len(self.tokens) and self.tokens[self.position][0] == expected_type:
+           self.position += 1  # Avança para o próximo token
+           return True
+        return False
 
     def cmd_if(self):
         if not self.match('LPAREN'):
             self.error("Esperado '(' após 'dadoQue'")
 
-        # Processa a condição do if
+        # Processa o lado esquerdo da condição
         left_expr, left_type = self.expr()
 
         if not self.match('REL_OP'):
             self.error("Operador relacional esperado em 'dadoQue'")
         operador = self.tokens[self.position - 1][1]
-
-        right_expr, right_type = self.expr()
         operador_python = self.parse_operador_relacional(operador)
+
+        # Processa o lado direito da condição
+        right_expr, right_type = self.expr()
 
         if not self.match('RPAREN'):
             self.error("Esperado ')' após expressão em 'dadoQue'")
 
-        # Adiciona o bloco do if
+        # Gera o código para a condicional
         self.generator.add_line(f"if {left_expr} {operador_python} {right_expr}:")
         self.generator.increase_indent()
 
@@ -88,22 +97,6 @@ class Parser:
         if not self.match('RBRACE'):
             self.error("Esperado '}' após bloco 'dadoQue'")
 
-        # Verifica se existe um bloco 'senao'
-        if self.match('ELSE'):
-            if not self.match('LBRACE'):
-                self.error("Esperado '{' após 'senao'")
-            self.generator.add_line("else:")
-            self.generator.increase_indent()
-            self.bloco()
-            self.generator.decrease_indent()
-            if not self.match('RBRACE'):
-                self.error("Esperado '}' após bloco 'senao'")
-
-    def match(self, expected_type):
-        if self.position < len(self.tokens) and self.tokens[self.position][0] == expected_type:
-            self.position += 1
-            return True
-        return False
 
     def error(self, message="Erro de Sintaxe"):
         current_token = self.tokens[self.position] if self.position < len(self.tokens) else "EOF"
@@ -214,12 +207,18 @@ class Parser:
         if not self.match('ID'):
             self.error("Esperado identificador em 'leia'")
         var_name = self.tokens[self.position - 1][1]
-        self.semantic_analyzer.check_variable(var_name)
+        var_type = self.semantic_analyzer.check_variable(var_name)  # Obtém o tipo esperado da variável
         if not self.match('RPAREN'):
             self.error("Esperado ')' após identificador em 'leia'")
         if not self.match('TERMINATOR'):
             self.error("Esperado '|' após comando 'leia'")
-        self.generator.add_line(f"{var_name} = input()")
+        # Converte com base no tipo esperado
+        if var_type == "inteiro":
+            self.generator.add_line(f"{var_name} = int(input())")
+        elif var_type == "decimal":
+            self.generator.add_line(f"{var_name} = float(input())")
+        elif var_type == "texto":
+            self.generator.add_line(f"{var_name} = input()")
 
     def cmd_escrita(self):
         if not self.match('LPAREN'):
@@ -267,13 +266,14 @@ class Parser:
 
     def termo(self):
         left_code, left_type = self.fator()
-        while self.match('MUL_OP'):
+        while self.match('MUL_OP') or self.match('MOD_OP'):  # Inclui MOD_OP
             op = self.tokens[self.position - 1][1]
-            op_python = {'vezes': '*', 'dividido': '/'}.get(op, op)
+            op_python = {'vezes': '*', 'dividido': '/', 'modulo': '%'}.get(op, op)
             right_code, right_type = self.fator()
             left_code = f"({left_code} {op_python} {right_code})"
             left_type = "decimal" if left_type == "decimal" or right_type == "decimal" else "inteiro"
         return left_code, left_type
+
 
     def fator(self):
         if self.match('NUMBER'):

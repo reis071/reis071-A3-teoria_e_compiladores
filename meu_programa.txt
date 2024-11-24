@@ -1,16 +1,21 @@
 inicioDoPrograma
+    inteiro numero|
+    inteiro fatorial|
     inteiro contador|
 
+    escreva("Digite um número para calcular o fatorial:")|
+    leia(numero)|
+
+    fatorial recebe 1|
     contador recebe 1|
 
-    escreva("Exibindo números pares de 1 a 10:")|
-
-    enquanto (contador menor_igual 10) {
-        dadoQue (contador dividido 2 igual 0) {
-            escreva(contador)|
-        }
+    enquanto (contador menor_igual numero) {
+        fatorial recebe fatorial vezes contador|
         contador recebe contador mais 1|
     }
 
-    escreva("Fim da exibição.")|
+    escreva("O fatorial de")|
+    escreva(numero)|
+    escreva("é:")|
+    escreva(fatorial)|
 fimDoPrograma
