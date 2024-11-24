@@ -1,6 +1,4 @@
 import re
-
-# Definindo os tokens da linguagem
 tokens_definitions = {
     'PROGRAM': r'\binicioDoPrograma\b',
     'END_PROGRAM': r'\bfimDoPrograma\b',
@@ -14,7 +12,7 @@ tokens_definitions = {
     'READ': r'\bleia\b',
     'WRITE': r'\bescreva\b',
     'ASSIGN': r'recebe',
-    'REL_OP': r'igual|diferente|menor|maior|menor_igual|maior_igual',
+    'REL_OP': r'menor_igual|maior_igual|igual|diferente|menor|maior',  # Ajustado
     'ADD_OP': r'mais|menos',
     'MUL_OP': r'vezes|dividido',
     'LPAREN': r'\(',
@@ -23,10 +21,10 @@ tokens_definitions = {
     'RBRACE': r'\}',
     'COMMA': r',',
     'SEMI': r';',
-    'DOT': r'\|',  # Token para ponto final
+    'TERMINATOR': r'\|',
     'NUMBER': r'\d+(\.\d+)?',
     'ID': r'[a-zA-Z_][a-zA-Z0-9_]*',
-    'STRING': r'"[^"]*"',  # Corrigido para permitir strings
+    'STRING': r'"[^"]*"',
     'NEWLINE': r'\n',
     'WHITESPACE': r'[ \t]+',
 }
@@ -47,32 +45,15 @@ def lex(code):
                 position = match.end(0)
                 break
         if not match:
-            raise SyntaxError(f'Erro Léxico: caractere inesperado {code[position]} na posição {position}')
+            raise SyntaxError(f'Erro Léxico: caractere inesperado "{code[position]}" na posição {position}')
     return tokens_found
 
 # Função para gerar tokens de um código de entrada
 def tokenize(code):
     return lex(code)
 
-# Função de teste
-def test_lexer():
-    test_code = '''
-    inicioDoPrograma
-    inteiro a, b.
-    decimal d.
-    escreva("Bem-vindo à linguagem fictícia").
-    leia(a).
-    dadoQue (a menor b) {
-        c recebe a mais b.
-    } senao {
-        c recebe a menos b.
-    }
-    paraCada (i recebe 0; i menor 10; i recebe i mais 1) {
-        escreva(i).
-    }
-    fimDoPrograma
-    '''
-
+def test_rel_op():
+    test_code = "menor_igual maior_igual igual diferente menor maior"
     try:
         tokens = tokenize(test_code)
         for token in tokens:
@@ -80,6 +61,5 @@ def test_lexer():
     except SyntaxError as e:
         print(e)
 
-# Executar teste
 if __name__ == "__main__":
-    test_lexer()
+    test_rel_op()

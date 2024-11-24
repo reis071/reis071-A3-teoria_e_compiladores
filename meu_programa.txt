@@ -1,6 +1,16 @@
 inicioDoPrograma
-    inteiro i|
-    decimal a|
-    
-    a recebe 2.2|
+    inteiro contador|
+
+    contador recebe 1|
+
+    escreva("Exibindo números pares de 1 a 10:")|
+
+    enquanto (contador menor_igual 10) {
+        dadoQue (contador dividido 2 igual 0) {
+            escreva(contador)|
+        }
+        contador recebe contador mais 1|
+    }
+
+    escreva("Fim da exibição.")|
 fimDoPrograma
