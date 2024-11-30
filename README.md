@@ -459,11 +459,6 @@ Gera o código Python equivalente.
 
 Contribuições são bem-vindas! Para contribuir, por favor, siga as seguintes etapas:
 
-Fork este repositório.  
-Crie um novo branch para suas alterações.   
-Faça o commit das suas alterações.  
-Envie um pull request.  
-
 # Saída Gerada (output.py)
 
 numero = 0 # int
@@ -491,5 +486,11 @@ O fatorial de
 5
 é:
 120
+
+Fork este repositório.  
+Crie um novo branch para suas alterações.   
+Faça o commit das suas alterações.  
+Envie um pull request.  
+
 
 
