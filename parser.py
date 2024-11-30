@@ -53,11 +53,14 @@ class Parser:
         'diferente': '!=',
         'menor_igual': '<=',
         'maior_igual': '>=',
+        'e': 'and',  # Suporte para operador lógico "e"
+        'ou': 'or',  # Suporte para operador lógico "ou"
         'modulo': '%',  # Adicionado
     }
         if operador not in operadores_map:
             raise ValueError(f"Erro Semântico: Operador relacional '{operador}' inválido.")
         return operadores_map[operador]
+
 
 
     def match(self, expected_type):
@@ -115,7 +118,7 @@ class Parser:
             self.error("Esperado 'fimDoPrograma'")
 
     def declara(self):
-        while self.tokens[self.position][0] in ['INT', 'DECIMAL', 'TEXT']:
+        while self.tokens[self.position][0] in ['INT', 'DECIMAL', 'TEXT', 'BOOLEAN']:  # Incluído 'BOOLEAN'
             tipo = self.tipo()
             ids = self.id_list()
             for var in ids:
@@ -126,8 +129,11 @@ class Parser:
                     self.generator.add_line(f"{var} = 0.0  # float")
                 elif tipo == "texto":
                     self.generator.add_line(f"{var} = ''  # str")
+                elif tipo == "booleano":  # Adicionado suporte ao tipo booleano
+                    self.generator.add_line(f"{var} = False  # bool")  # Inicializa como False
             if not self.match('TERMINATOR'):
                 self.error("Esperado '|' após declaração")
+
 
     def tipo(self):
         if self.match('INT'):
@@ -136,8 +142,11 @@ class Parser:
             return "decimal"
         elif self.match('TEXT'):
             return "texto"
+        elif self.match('BOOLEAN'):  # Adicionado suporte a booleano
+            return "booleano"
         else:
             self.error("Tipo de variável esperado")
+
 
     def id_list(self):
         ids = []
@@ -286,6 +295,10 @@ class Parser:
         elif self.match('STRING'):  # Novo suporte para strings
            string_value = self.tokens[self.position - 1][1]
            return string_value, "texto"
+        elif self.match('TRUE'):  # Adicionado suporte para verdadeiro
+            return "True", "booleano"
+        elif self.match('FALSE'):  # Adicionado suporte para falso
+            return "False", "booleano"
         elif self.match('LPAREN'):
            code, expr_type = self.expr()
            if not self.match('RPAREN'):
@@ -293,5 +306,42 @@ class Parser:
            return f"({code})", expr_type
         else:
            self.error("Fator esperado")
+           
+    def cmd_for(self):
+        if not self.match('LPAREN'):
+            self.error("Esperado '(' após 'paraCada'")
+        
+        # Processa a parte de inicialização do 'for'
+        init_code = self.cmd_expr(for_loop=True)
+        
+        # Processa a condição do 'for'
+        condition = self.expr()
+        if not self.match('REL_OP'):
+            self.error("Operador relacional esperado em 'paraCada'")
+        op = self.tokens[self.position - 1][1]
+        condition += f" {self.parse_operador_relacional(op)} " + self.expr()
+
+        if not self.match('SEMI'):
+            self.error("Esperado ';' após condição em 'paraCada'")
+        
+        # Processa a parte de incremento do 'for'
+        increment_code = self.cmd_expr(for_loop=True)
+        
+        if not self.match('RPAREN'):
+            self.error("Esperado ')' após incremento em 'paraCada'")
+        
+        if not self.match('LBRACE'):
+            self.error("Esperado '{' após condição 'paraCada'")
+        
+        self.generator.add_line(init_code)
+        self.generator.add_line(f"while {condition}:")
+        self.generator.increase_indent()
+        self.bloco()  # Processa o bloco de comandos dentro do 'for'
+        self.generator.add_line(increment_code)  # Adiciona o incremento do 'for'
+        self.generator.decrease_indent()
+        
+        if not self.match('RBRACE'):
+            self.error("Esperado '}' após bloco 'paraCada'")
+
 
 

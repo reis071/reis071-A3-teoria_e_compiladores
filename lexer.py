@@ -1,10 +1,14 @@
 import re
+
 tokens_definitions = {
     'PROGRAM': r'\binicioDoPrograma\b',
     'END_PROGRAM': r'\bfimDoPrograma\b',
     'INT': r'\binteiro\b',
     'DECIMAL': r'\bdecimal\b',
     'TEXT': r'\btexto\b',
+    'BOOLEAN': r'\bbooleano\b',
+    'TRUE': r'\bverdadeiro\b',
+    'FALSE': r'\bfalso\b',
     'IF': r'\bdadoQue\b',
     'ELSE': r'\bsenao\b',
     'WHILE': r'\benquanto\b',
