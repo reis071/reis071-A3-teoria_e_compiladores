@@ -100,6 +100,18 @@ class Parser:
         if not self.match('RBRACE'):
             self.error("Esperado '}' após bloco 'dadoQue'")
 
+        # Verifica se há um bloco 'senao'
+        if self.match('ELSE'):
+            self.generator.add_line("else:")
+            self.generator.increase_indent()
+            if not self.match('LBRACE'):
+                self.error("Esperado '{' após 'senao'")
+            self.bloco()
+            self.generator.decrease_indent()
+            if not self.match('RBRACE'):
+                self.error("Esperado '}' após bloco 'senao'")
+
+
 
     def error(self, message="Erro de Sintaxe"):
         current_token = self.tokens[self.position] if self.position < len(self.tokens) else "EOF"

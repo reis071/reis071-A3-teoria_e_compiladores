@@ -1,4 +1,6 @@
 ativo = False  # bool
 ativo = True
-if ativo == True:
-    print("Desativado")
+if ativo == False:
+    print("O programa está ativo.")
+else:
+    print("O programa está desativado.")

@@ -1,7 +1,9 @@
 inicioDoPrograma
 booleano ativo |
 ativo recebe verdadeiro |
-dadoQue (ativo igual verdadeiro) {
-    escreva("Desativado") |
+dadoQue (ativo igual falso) {
+    escreva("O programa está ativo.") |
+} senao {
+    escreva("O programa está desativado.") |
 }
 fimDoPrograma
