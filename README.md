@@ -12,6 +12,8 @@ Victor Macedo Camargo  1271924581
 Descrição
 
 Esse Projeto tem como Objetivo traduzir o código de uma linguagem própria para o Python, iniciando com a fase de análise léxica, que identifica os componentes básicos do código.
+o projeto implementa um compilador para uma linguagem fictícia criada para fins educacionais. O compilador traduz programas escritos nesta linguagem para código Python executável. Ele é composto por módulos responsáveis por análise léxica, análise sintática, análise semântica e geração de código Python.
+
 
 
 Instalação
@@ -76,6 +78,11 @@ Exemplo de uso:
 # Arquivo principal para a execução do compilador de linguagem fictícia.
 # Este programa lê um arquivo contendo código na linguagem fictícia, compila para Python e executa o código gerado.
 
+O ponto de entrada do programa. Este arquivo:
+Lê um arquivo de entrada contendo o código-fonte na linguagem fictícia.
+Realiza o processo de tokenização, análise sintática e geração de código Python.
+Salva o código Python gerado em um arquivo e o executa automaticamente.
+
     import sys
     from lexer import tokenize
     from parser import Parser
@@ -138,7 +145,7 @@ Exemplo de uso:
 # Lexer para a linguagem fictícia.
 
 # Responsável por transformar o código de entrada em uma lista de tokens, que serão analisados pelo parser.
-
+Responsável pela análise léxica, onde o código-fonte é transformado em uma sequência de tokens. Cada token representa uma unidade sintática válida, como palavras-chave, identificadores, operadores, etc.
 
     import re
 
@@ -248,6 +255,10 @@ Exemplo de uso:
 
 # 1. Classe CodeGenerator
 # A classe CodeGenerator gerencia a geração do código Python a partir da análise sintática.
+Realiza a análise sintática e semântica do programa:
+Garante que o código-fonte segue as regras gramaticais da linguagem.
+Verifica a existência e compatibilidade de tipos de variáveis.
+Gera o código Python equivalente.
 
     class CodeGenerator:
         def __init__(self):
@@ -452,3 +463,33 @@ Fork este repositório.
 Crie um novo branch para suas alterações.   
 Faça o commit das suas alterações.  
 Envie um pull request.  
+
+# Saída Gerada (output.py)
+
+numero = 0 # int
+fatorial = 0 # int
+contador = 0 # int
+print("Digite um número para calcular o fatorial:")
+numero = int(input())
+fatorial = 1
+contador = 1
+while contador <= numero:
+fatorial = (fatorial \* contador)
+contador = (contador + 1)
+print("O fatorial de")
+print(numero)
+print("é:")
+print(fatorial)
+
+# Execução
+
+Ao executar o programa, o terminal exibirá algo como:
+
+Digite um número para calcular o fatorial:
+5
+O fatorial de
+5
+é:
+120
+
+
