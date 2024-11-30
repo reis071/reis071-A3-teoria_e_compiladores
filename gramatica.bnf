@@ -1,4 +1,4 @@
-<programa> ::= "inicio_programa" <declarações> <bloco> "fim_programa"
+<programa> ::= "inicioDoPrograma" <declarações> <bloco> "fimDoPrograma"
 
 <declarações> ::= (<declaração>)*
 
@@ -9,19 +9,19 @@
 <bloco> ::= (<comando>)*
 
 <comando> ::= <comando_leitura> 
-             | <comando_escrita> 
-             | <comando_atribuicao> 
-             | <comando_condicional> 
-             | <comando_enquanto>
-             | <comando_para>
+            | <comando_escrita> 
+            | <comando_atribuicao> 
+            | <comando_condicional> 
+            | <comando_enquanto>
+            | <comando_para>
 
 <comando_leitura> ::= "ler" "(" <identificador> ")" "."
 
 <comando_escrita> ::= "exibir" "(" (<identificador> | <string>) ")" "."
 
-<comando_atribuicao> ::= <identificador> ":=" <expressao> "."
+<comando_atribuicao> ::= <identificador> "recebe" <expressao> "."
 
-<comando_condicional> ::= "dado_que" "(" <expressao> <operador_relacional> <expressao> ")" "{" <bloco> "}" ("senao" "{" <bloco> "}")?
+<comando_condicional> ::= "dadoQue" "(" <expressao> <operador_relacional> <expressao> ")" "{" <bloco> "}" ("senao" "{" <bloco> "}")?
 
 <comando_enquanto> ::= "enquanto" "(" <expressao> <operador_relacional> <expressao> ")" "{" <bloco> "}"
 
@@ -38,6 +38,9 @@
 <identificador> ::= <letra> (<letra> | <digito>)*
 
 <numero> ::= <digito>+
-<letra> ::= "a" | ... | "z" | "A" | ... | "Z"
-<digito> ::= "0" | ... | "9"
+
+<letra> ::= "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"
+
+<digito> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
 <string> ::= "\"" (<caractere>)* "\""
