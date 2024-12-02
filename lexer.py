@@ -32,7 +32,7 @@ tokens_definitions = {
     'ID': r'[a-zA-Z_][a-zA-Z0-9_]*',
     'STRING': r'"[^"]*"',
     'NEWLINE': r'\n',
-    'WHITESPACE': r'[ \t]+',
+    'WHITESPACE': r'[ \t]+'
 }
 
 # Função para o Lexer

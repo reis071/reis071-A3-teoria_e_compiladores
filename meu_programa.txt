@@ -1,9 +1,49 @@
 inicioDoPrograma
+
+inteiro contador, maximo |
+decimal preco, desconto |
+texto mensagem |
 booleano ativo |
+
+contador recebe 0 |
+maximo recebe 10 |
+preco recebe 100.0 |
+desconto recebe 0.2 |
+mensagem recebe "Bem-vindo ao programa!" |
 ativo recebe verdadeiro |
-dadoQue (ativo igual falso) {
+
+escreva(mensagem) |
+
+dadoQue (ativo igual verdadeiro) {
     escreva("O programa está ativo.") |
 } senao {
     escreva("O programa está desativado.") |
 }
+
+enquanto (contador menor maximo) {
+    escreva("Contador atual: ") |
+    escreva(contador) |
+    contador recebe contador mais 1 |
+}
+
+paraCada (contador recebe 0; contador menor maximo; contador recebe contador mais 1) {
+    escreva("Iteração do paraCada: ") |
+    escreva(contador) |
+}
+
+preco recebe preco menos (preco vezes desconto) |
+escreva("Preço com desconto: ") |
+escreva(preco) |
+
+escreva("Digite um número inteiro: ") |
+leia(contador) |
+escreva("Você digitou: ") |
+escreva(contador) |
+
+dadoQue (contador maior 0) {
+    escreva("O número digitado é positivo.") |
+} senao {
+    escreva("O número digitado é zero ou negativo.") |
+}
+
 fimDoPrograma

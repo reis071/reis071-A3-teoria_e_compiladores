@@ -185,11 +185,12 @@ class Parser:
         elif self.match('WHILE'):
             self.cmd_while()  # Adiciona suporte ao comando 'enquanto'
         elif self.match('FOR'):
-            self.cmd_para()
+            self.cmd_for()  # Corrigido para chamar cmd_for
         elif self.tokens[self.position][0] == 'ID' and self.tokens[self.position + 1][0] == 'ASSIGN':
             self.cmd_expr()
         else:
             self.error("Comando inválido")
+
 
     def cmd_while(self):
         if not self.match('LPAREN'):
@@ -322,38 +323,64 @@ class Parser:
     def cmd_for(self):
         if not self.match('LPAREN'):
             self.error("Esperado '(' após 'paraCada'")
-        
-        # Processa a parte de inicialização do 'for'
-        init_code = self.cmd_expr(for_loop=True)
-        
-        # Processa a condição do 'for'
-        condition = self.expr()
-        if not self.match('REL_OP'):
-            self.error("Operador relacional esperado em 'paraCada'")
-        op = self.tokens[self.position - 1][1]
-        condition += f" {self.parse_operador_relacional(op)} " + self.expr()
 
+        # Processa a parte de inicialização do 'for'
+        if not self.match('ID') or not self.match('ASSIGN'):
+            self.error("Esperado inicialização no 'paraCada'")
+        var_name = self.tokens[self.position - 2][1]  # Obtém o nome da variável
+        init_value, init_type = self.expr()
+        self.generator.add_line(f"{var_name} = {init_value}")
+
+        # Verifica o ';' após inicialização
         if not self.match('SEMI'):
-            self.error("Esperado ';' após condição em 'paraCada'")
-        
-        # Processa a parte de incremento do 'for'
-        increment_code = self.cmd_expr(for_loop=True)
-        
+            self.error(f"Esperado ';' após inicialização no 'paraCada', mas encontrado {self.tokens[self.position]}")
+
+        # Processa a condição do 'for'
+        left_expr, left_type = self.expr()
+
+        if not self.match('REL_OP'):
+            self.error("Esperado operador relacional no 'paraCada'")
+        operador = self.tokens[self.position - 1][1]
+        operador_python = self.parse_operador_relacional(operador)
+
+        right_expr, right_type = self.expr()
+
+        # Concatena a condição completa
+        condition_full = f"{left_expr} {operador_python} {right_expr}"
+
+        # Verifica o ';' após a condição
+        if not self.match('SEMI'):
+            self.error(f"Esperado ';' após condição no 'paraCada', mas encontrado {self.tokens[self.position]}")
+
+        # Processa o incremento do 'for'
+        if not self.match('ID'):
+            self.error("Esperado identificador no incremento do 'paraCada'")
+        increment_var = self.tokens[self.position - 1][1]
+        if not self.match('ASSIGN'):
+            self.error("Esperado 'recebe' no incremento do 'paraCada'")
+        increment_expr, increment_type = self.expr()
+        increment_code = f"{increment_var} = {increment_expr}"
+
         if not self.match('RPAREN'):
-            self.error("Esperado ')' após incremento em 'paraCada'")
-        
+            self.error(f"Esperado ')' após incremento no 'paraCada', mas encontrado {self.tokens[self.position]}")
+
         if not self.match('LBRACE'):
-            self.error("Esperado '{' após condição 'paraCada'")
-        
-        self.generator.add_line(init_code)
-        self.generator.add_line(f"while {condition}:")
+            self.error("Esperado '{' após condição do 'paraCada'")
+
+        # Gera o código para o 'for' convertido para 'while'
+        self.generator.add_line(f"while {condition_full}:")
         self.generator.increase_indent()
-        self.bloco()  # Processa o bloco de comandos dentro do 'for'
-        self.generator.add_line(increment_code)  # Adiciona o incremento do 'for'
+        self.bloco()  # Processa o bloco do 'for'
+        self.generator.add_line(f"{increment_code}")  # Adiciona o incremento
         self.generator.decrease_indent()
-        
+
         if not self.match('RBRACE'):
-            self.error("Esperado '}' após bloco 'paraCada'")
+            self.error("Esperado '}' após bloco do 'paraCada'")
+
+
+
+
+
 
 
 
